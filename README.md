@@ -8,6 +8,6 @@ This tool is an alternative of the Motion Builder "Batch" function:
 - it allows you to keep the original BVH framerate (but you can still force the framerate value).
 
 # Build Instructions
-1) Set the environment variable Mobu_InstallDir with your Motion Builder installation path.
+- Set the environment variable Mobu_InstallDir with your Motion Builder installation path.
 Typically, "C:\Program Files\Autodesk\MotionBuilder".
-2) Build the solution MoBuTools.sln
+- Build the solution MoBuTools.sln
