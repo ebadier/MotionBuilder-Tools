@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MoBuTools", "MoBuTools.vcxproj", "{DE682793-36C8-40C3-82A7-CA2974DDB93A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BvhToFbxTool", "BvhToFbxTool.vcxproj", "{69496619-B4D1-44DF-9FE2-8859DC66DA6A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DE682793-36C8-40C3-82A7-CA2974DDB93A} = {DE682793-36C8-40C3-82A7-CA2974DDB93A}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE682793-36C8-40C3-82A7-CA2974DDB93A}.Debug|x64.ActiveCfg = Debug|x64
+		{DE682793-36C8-40C3-82A7-CA2974DDB93A}.Debug|x64.Build.0 = Debug|x64
+		{DE682793-36C8-40C3-82A7-CA2974DDB93A}.Release|x64.ActiveCfg = Release|x64
+		{DE682793-36C8-40C3-82A7-CA2974DDB93A}.Release|x64.Build.0 = Release|x64
+		{69496619-B4D1-44DF-9FE2-8859DC66DA6A}.Debug|x64.ActiveCfg = Debug|x64
+		{69496619-B4D1-44DF-9FE2-8859DC66DA6A}.Debug|x64.Build.0 = Debug|x64
+		{69496619-B4D1-44DF-9FE2-8859DC66DA6A}.Release|x64.ActiveCfg = Release|x64
+		{69496619-B4D1-44DF-9FE2-8859DC66DA6A}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
