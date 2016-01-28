@@ -30,6 +30,7 @@ private:
 	void	EventOnForceFPSButtonClick			( HISender pSender, HKEvent pEvent );
 	void	EventOnProcessButtonClick			( HISender pSender, HKEvent pEvent );
 
+	void						GetBVHFiles(FBStringList& pBVHFiles);
 	double						GetBVHFrameTime(const FBString& pBvhFilename)const;
 	bool						ForceFPS()const;
 	bool						SetFPS(const FBString& pBvhFilename)const;
@@ -46,7 +47,6 @@ private:
 	FBLabel				mInputDirLabel;
 	FBEdit				mInputDirEdit;
 	FBButton			mInputDirPopupButton;
-	FBStringList		mInputFiles;
 
 	FBLabel				mOutputDirLabel;
 	FBEdit				mOutputDirEdit;

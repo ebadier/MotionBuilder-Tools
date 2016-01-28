@@ -19,9 +19,6 @@ FBRegisterTool		(	BvhToFbxTool,
 //---------------------------------------------------------------------------------------//
 bool BvhToFbxTool::FBCreate()
 {
-	// Tool variables
-	mInputFiles.Clear();
-
 	// UI Create & Configure
 	UICreate	();
 	UIConfigure	();
@@ -34,7 +31,6 @@ bool BvhToFbxTool::FBCreate()
 void BvhToFbxTool::FBDestroy()
 {
 	UIDisconnect();
-	mInputFiles.Clear();
 }
 
 //---------------------------------------------------------------------------------------//
@@ -50,6 +46,36 @@ FBString BvhToFbxTool::GetOutputDir()const
 }
 
 //---------------------------------------------------------------------------------------//
+void BvhToFbxTool::GetBVHFiles(FBStringList& pBVHFiles)
+{
+	//MBT_Out("Selected folder : " << pInputFolder);
+	fbxsdk::FbxFolder folder;
+	if(folder.Open(GetInputDir()))
+	{
+		while(folder.IsOpen() && folder.Next())
+		{
+			//MBT_Out("Entry : " << folder.GetEntryName());
+			//MBT_Out("Entry type : " << folder.GetEntryType());
+			//MBT_Out("Entry extension : " << folder.GetEntryExtension());
+
+			if( folder.GetEntryType() == fbxsdk::FbxFolder::eRegularEntry )
+			{
+				if( (strcmp(folder.GetEntryExtension(), "bvh") == 0) || (strcmp(folder.GetEntryExtension(), "BVH") == 0) )
+				{
+					//MBT_Out("BVH File : " << folder.GetEntryName());
+					pBVHFiles.Add(folder.GetEntryName());
+				}
+			}
+		}
+		folder.Close();
+	}
+	else
+	{
+		MBT_Popup("Input Directory is not valid !");
+	}
+}
+
+//---------------------------------------------------------------------------------------//
 double BvhToFbxTool::GetBVHFrameTime(const FBString& pBvhFilename)const
 {
 	double frameTime = FRAMETIME_ERROR;
@@ -57,21 +83,31 @@ double BvhToFbxTool::GetBVHFrameTime(const FBString& pBvhFilename)const
 	FILE* file = NULL;
 	if ( fopen_s(&file, pBvhFilename, "r") == 0 )
 	{
+		// Get Frame Time line in the bvh file.
 		char* pos = NULL; 
 		char buffer[4096];
 		do
 		{
 			fgets(buffer, 4096, file);
-			pos = strstr(buffer, "Frame Time:");
+			pos = strstr(buffer, "Frame Time");
 		}
 		while( (!feof(file)) && (pos == NULL) );
 
+		// Get the Frame Time value.
 		if(pos != NULL)
 		{
-			FBString line(buffer);
-			//MBT_Out(line);
-			FBString frameTimeStr = line.Mid(line.ReverseFind(' ')+1, line.GetLen());
-			frameTime = atof( frameTimeStr );
+			const char delims[4] = " :\t";
+			char* context = NULL;
+			char* token = strtok_s( buffer, delims, &context);
+			char* lastToken = NULL;
+			do 
+			{
+				//MBT_Out(token);
+				lastToken = token;
+				token = strtok_s( NULL, delims, &context);
+			} while (token != NULL);
+			
+			frameTime = atof( lastToken );
 			if(frameTime == 0.0)
 			{
 				frameTime = FRAMETIME_ERROR;
@@ -285,37 +321,10 @@ void BvhToFbxTool::EventOnInputDirPopupButtonClick( HISender pSender, HKEvent pE
 	FBFolderPopup folderPopup;
 	folderPopup.Caption	= "Select Directory containing BVH Files";
 
-	mInputFiles.Clear();
 	mInputDirEdit.Text = "";
 	if(folderPopup.Execute())
 	{
-		const FBString selectedFolder = FBString(folderPopup.Path, "/");
-		//MBT_Out("Selected folder : " << selectedFolder);
-		fbxsdk::FbxFolder folder;
-		if(folder.Open(selectedFolder))
-		{
-			mInputDirEdit.Text = folderPopup.Path;
-			while(folder.IsOpen() && folder.Next())
-			{
-				//MBT_Out("Entry : " << folder.GetEntryName());
-				//MBT_Out("Entry type : " << folder.GetEntryType());
-				//MBT_Out("Entry extension : " << folder.GetEntryExtension());
-
-				if( folder.GetEntryType() == fbxsdk::FbxFolder::eRegularEntry )
-				{
-					if( (strcmp(folder.GetEntryExtension(), "bvh") == 0) || (strcmp(folder.GetEntryExtension(), "BVH") == 0) )
-					{
-						//MBT_Out("BVH File : " << folder.GetEntryName());
-						mInputFiles.Add(folder.GetEntryName());
-					}
-				}
-			}
-			folder.Close();
-		}
-		else
-		{
-			MBT_Popup("Directory is not valid !");
-		}
+		mInputDirEdit.Text = folderPopup.Path;
 	}
 }
 
@@ -351,7 +360,9 @@ void BvhToFbxTool::EventOnForceFPSButtonClick( HISender pSender, HKEvent pEvent 
 void BvhToFbxTool::EventOnProcessButtonClick( HISender pSender, HKEvent pEvent )
 {
 	MBT_Test_P(GetInputDir() == "", "Input Directory not set !",);
-	MBT_Test_P(mInputFiles.GetCount() < 1, "No BVH files found in Input Directory !", );
+	FBStringList bvhFiles;
+	GetBVHFiles(bvhFiles);
+	MBT_Test_P(bvhFiles.GetCount() < 1, "No BVH files found in Input Directory !", );
 	MBT_Test_P(GetOutputDir() == "", "Ouput Directory not set !",);
 
 	const bool removeBVHRefNode = mRemoveBVHRefNodeButton.State == 1;
@@ -360,11 +371,11 @@ void BvhToFbxTool::EventOnProcessButtonClick( HISender pSender, HKEvent pEvent )
 	FBProgress progress;
 	progress.Caption = "BVH To FBX";
 	progress.ProgressBegin();
-	const int nbFiles = mInputFiles.GetCount();
+	const int nbFiles = bvhFiles.GetCount();
 	char message[1024];
 	for (int i = 0; i < nbFiles; ++i)
 	{
-		const FBString& bvhFile = mInputFiles[i];
+		const FBString& bvhFile = bvhFiles[i];
 		const FBString bvhFilePath = FBSystem::TheOne().MakeFullPath(FBString(GetInputDir(), bvhFile));
 		sprintf_s(message, "Processing file (%d / %d) : %s", i+1, nbFiles, bvhFilePath);
 		MBT_Out(message);
