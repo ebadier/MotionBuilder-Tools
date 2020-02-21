@@ -74,7 +74,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(Mobu_InstallDir)\OpenRealitySDK\include;$(Mobu_InstallDir)\OpenRealitySDK\include\fbxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%Mobu_InstallDir%\OpenRealitySDK\include;%Mobu_InstallDir%\OpenRealitySDK\include\fbxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -129,7 +129,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(Mobu_InstallDir)\OpenRealitySDK\include;$(Mobu_InstallDir)\OpenRealitySDK\include\fbxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%Mobu_InstallDir%\OpenRealitySDK\include;%Mobu_InstallDir%\OpenRealitySDK\include\fbxsdk;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>

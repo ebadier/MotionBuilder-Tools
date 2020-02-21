@@ -2,3 +2,4 @@
 *.sdf
 /bin
 /obj
+*/.vs

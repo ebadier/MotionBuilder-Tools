@@ -69,7 +69,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <AdditionalIncludeDirectories>$(Mobu_InstallDir)\OpenRealitySDK\include;$(Mobu_InstallDir)\OpenRealitySDK\include\fbxsdk;..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%Mobu_InstallDir%\OpenRealitySDK\include;%Mobu_InstallDir%\OpenRealitySDK\include\fbxsdk;..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -96,7 +96,7 @@
       <AdditionalDependencies>MoBuTools.lib;fbsdk.lib;fbxsdk.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration);$(Mobu_InstallDir)\OpenRealitySDK\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration);%Mobu_InstallDir%\OpenRealitySDK\lib\$(Platform);%ProgramFiles%\Microsoft SDKs\Windows\v7.1A\Lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -123,7 +123,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(Mobu_InstallDir)\OpenRealitySDK\include;$(Mobu_InstallDir)\OpenRealitySDK\include\fbxsdk;..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>%Mobu_InstallDir%\OpenRealitySDK\include;%Mobu_InstallDir%\OpenRealitySDK\include\fbxsdk;..\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -150,7 +150,7 @@
       <AdditionalDependencies>MoBuTools.lib;fbsdk.lib;fbxsdk.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration);$(Mobu_InstallDir)\OpenRealitySDK\lib\$(Platform);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration);%Mobu_InstallDir%\OpenRealitySDK\lib\$(Platform);%ProgramFiles%\Microsoft SDKs\Windows\v7.1A\Lib\$(Platform)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>
       </ProgramDatabaseFile>
